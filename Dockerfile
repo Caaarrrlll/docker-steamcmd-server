@@ -9,6 +9,7 @@ RUN apt-get update && \
 
 ENV DATA_DIR="/serverdata"
 ENV STEAMCMD_DIR="${DATA_DIR}/steamcmd"
+ENV PROTON_DIR="${DATA_DIR}/proton"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
 ENV GAME_ID="template"
 ENV GAME_NAME="template"
@@ -25,6 +26,7 @@ ENV DATA_PERM=770
 
 RUN mkdir $DATA_DIR && \
 	mkdir $STEAMCMD_DIR && \
+	mkdir $PROTON_DIR && \
 	mkdir $SERVER_DIR && \
 	useradd -d $DATA_DIR -s /bin/bash $USER && \
 	chown -R $USER $DATA_DIR && \

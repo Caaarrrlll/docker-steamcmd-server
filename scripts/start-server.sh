@@ -6,6 +6,14 @@ if [ ! -f ${STEAMCMD_DIR}/steamcmd.sh ]; then
     rm ${STEAMCMD_DIR}/steamcmd_linux.tar.gz
 fi
 
+# TODO see how to automate updates for this
+if [ ! -f ${PROTON_DIR}/proton.tar.gz ]; then
+    echo "Proton not found!"
+    wget -q -O ${PROTON_DIR}/proton.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton10-32/GE-Proton10-32.tar.gz
+    tar --directory ${PROTON_DIR} -xvzf /serverdata/proton.tar.gz
+    rm ${PROTON_DIR}/proton.tar.gz
+fi
+
 echo "---Update SteamCMD---"
 if [ "${USERNAME}" == "" ]; then
     ${STEAMCMD_DIR}/steamcmd.sh \
@@ -50,19 +58,9 @@ else
     fi
 fi
 
-echo "---Prepare Server---"
-if [ ! -f ${DATA_DIR}/.steam/sdk32/steamclient.so ]; then
-	if [ ! -d ${DATA_DIR}/.steam ]; then
-    	mkdir ${DATA_DIR}/.steam
-    fi
-	if [ ! -d ${DATA_DIR}/.steam/sdk32 ]; then
-    	mkdir ${DATA_DIR}/.steam/sdk32
-    fi
-    cp -R ${STEAMCMD_DIR}/linux32/* ${DATA_DIR}/.steam/sdk32/
-fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 echo "---Server ready---"
 
 echo "---Start Server---"
-cd ${SERVER_DIR}
-${SERVER_DIR}/srcds_run -game ${GAME_NAME} ${GAME_PARAMS} -console +port ${GAME_PORT}
+${PROTON_DIR}/proton run 
+${SERVER_DIR}/ShooterGame/Binaries/Win64/ArkAscendedServer.exe ${MAP}?listen?SessionName=${SERVER_NAME}?ServerPassword=${SRV_PWD}?ServerAdminPassword=${SRV_ADMIN_PWD}${GAME_PARAMS} ${GAME_PARAMS_EXTRA}
