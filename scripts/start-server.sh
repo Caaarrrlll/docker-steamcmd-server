@@ -18,10 +18,10 @@ else
 fi
 
 # TODO see how to automate updates for this / make it a param so people can pass in their own proton version if they want
-if [ ! -f ${PROTON_DIR}/proton.tar.gz ]; then
+if [ ! -f ${PROTON_DIR}/proton/proton ]; then
     echo "Proton not found!"
     wget -q -O ${PROTON_DIR}/proton.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton10-32/GE-Proton10-32.tar.gz
-    tar --directory ${PROTON_DIR} -xvzf /serverdata/proton.tar.gz
+    tar --directory ${PROTON_DIR} -xvzf /serverdata/proton/proton.tar.gz
     rm ${PROTON_DIR}/proton.tar.gz
 fi
 
