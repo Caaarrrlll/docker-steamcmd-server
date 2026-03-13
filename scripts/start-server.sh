@@ -6,14 +6,6 @@ if [ ! -f ${STEAMCMD_DIR}/steamcmd.sh ]; then
     rm ${STEAMCMD_DIR}/steamcmd_linux.tar.gz
 fi
 
-# TODO see how to automate updates for this
-if [ ! -f ${PROTON_DIR}/proton.tar.gz ]; then
-    echo "Proton not found!"
-    wget -q -O ${PROTON_DIR}/proton.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton10-32/GE-Proton10-32.tar.gz
-    tar --directory ${PROTON_DIR} -xvzf /serverdata/proton.tar.gz
-    rm ${PROTON_DIR}/proton.tar.gz
-fi
-
 echo "---Update SteamCMD---"
 if [ "${USERNAME}" == "" ]; then
     ${STEAMCMD_DIR}/steamcmd.sh \
@@ -23,6 +15,14 @@ else
     ${STEAMCMD_DIR}/steamcmd.sh \
     +login ${USERNAME} ${PASSWRD} \
     +quit
+fi
+
+# TODO see how to automate updates for this / make it a param so people can pass in their own proton version if they want
+if [ ! -f ${PROTON_DIR}/proton.tar.gz ]; then
+    echo "Proton not found!"
+    wget -q -O ${PROTON_DIR}/proton.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton10-32/GE-Proton10-32.tar.gz
+    tar --directory ${PROTON_DIR} -xvzf /serverdata/proton.tar.gz
+    rm ${PROTON_DIR}/proton.tar.gz
 fi
 
 echo "---Update Server---"
